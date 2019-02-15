@@ -15,7 +15,7 @@
     <?php wp_head();?>
 
 </head>
-<body class="cnt-home">
+<body <?php body_class();?> class="cnt-home">
 <!-- ============================================== HEADER ============================================== -->
 <header class="header-style-1">
 
@@ -102,11 +102,14 @@
                 <div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
                     <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 
-                    <div class="dropdown dropdown-cart"> <a href="#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
+                    <div class="dropdown dropdown-cart">
+
+                        <?php global $woocommerce;?>
+                        <a href="<?php echo $woocommerce->cart->get_cart_url();?>" class="lnk-cart" >
                             <div class="items-cart-inner">
                                 <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
-                                <div class="basket-item-count"><span class="count">2</span></div>
-                                <div class="total-price-basket"> <span class="lbl">cart -</span> <span class="total-price"> <span class="sign">$</span><span class="value">600.00</span> </span> </div>
+                                <div class="basket-item-count"><span class="count"><?php echo sprintf(_n('%d','%d',$woocommerce->cart->cart_contents_count,'filpmart' ),$woocommerce->cart->cart_contents_count);?></span></div>
+                                <div class="total-price-basket"> <span class="total-price"> <span class="sign">$</span><span class="value"><?php echo $woocommerce->cart->get_cart_total();?></span> </span> </div>
                             </div>
                         </a>
                         <ul class="dropdown-menu">

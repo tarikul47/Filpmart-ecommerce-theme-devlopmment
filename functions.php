@@ -79,6 +79,8 @@ if ( ! function_exists( 'filpmart_setup' ) ) :
 			'flex-width'  => true,
 			'flex-height' => true,
 		) );
+
+        add_theme_support('woocommerce');
 	}
 endif;
 add_action( 'after_setup_theme', 'filpmart_setup' );
@@ -139,13 +141,15 @@ function filpmart_scripts() {
         'animate.min-css' => ASSETS_DIR . 'css/animate.min.css',
         'rateit-css'    => ASSETS_DIR . 'css/rateit.css',
         'bootstrap-select-css'           => ASSETS_DIR . 'css/bootstrap-select.min.css',
-        'font-awesome-css'         => ASSETS_DIR . 'css/font-awesome.css'
+        'font-awesome-css'         => ASSETS_DIR . 'css/font-awesome.css',
+        'woo-css'         => ASSETS_DIR . 'css/woo.css'
     );
 
     foreach ( $css_files as $handle => $css_file ) {
         wp_enqueue_style( $handle, $css_file, null, VERSION );
     }
 
+	//wp_enqueue_style( 'filpmart-woo-css',  ASSETS_DIR . 'css/woo.css' );
 	wp_enqueue_style( 'filpmart-style', get_stylesheet_uri() );
 
 
@@ -222,3 +226,85 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+/**
+ * Woocommerce action remove
+ */
+function woo_remove(){
+
+    remove_action('woocommerce_before_main_content','woocommerce_breadcrumb',20);
+    remove_action('woocommerce_before_shop_loop','woocommerce_result_count',20);
+    remove_action('woocommerce_before_shop_loop','woocommerce_catalog_ordering',30);
+    remove_action('woocommerce_after_shop_loop','woocommerce_pagination',10);
+}
+add_action('init','woo_remove');
+
+/**
+ * Change number or products per row to 3
+ */
+if (!function_exists('loop_columns')) {
+    function loop_columns() {
+        return 3; // 3 products per row
+    }
+}
+add_filter('loop_shop_columns', 'loop_columns', 999);
+
+/**
+ * Breadcrumb
+ */
+
+/**
+ * Change several of the breadcrumb defaults
+ */
+
+function flipmart_breadcrumb() {
+    return array(
+        'delimiter'   => ' &#47; ',
+        'wrap_before' => '<div class="breadcrumb-inner"><ul class="list-inline list-unstyled">',
+        'wrap_after'  => '</ul></div>',
+        'before'      => '',
+        'after'       => '',
+        'home'        => _x( 'Home', 'breadcrumb', 'woocommerce' ),
+    );
+}
+add_filter('woocommerce_breadcrumb_defaults','flipmart_breadcrumb');
+
+/**
+ * Pagination
+ */
+
+function flipmart_pagination(){
+
+    global $wp_query;
+
+    if ($wp_query->max_num_pages <= 1) return;
+
+    $big = 9999999999;// need an unlikely integer
+
+    $pages = paginate_links(array(
+        'base'  => str_replace($big, '%#%',esc_url(get_pagenum_link($big))),
+        'format'=> 'paged=%#%',
+        'current'=>max(1,get_query_var('paged')),
+        'total' => $wp_query->max_num_pages,
+        'type' => 'array',
+        'prev_next'=>true,
+        'prev_text'=>_('<i class="fa fa-angle-left"  aria-hidden="true"></i>'),
+        'next_text'=>_('<i class="fa fa-angle-right"  aria-hidden="true"></i>')
+
+    ));
+
+    if (is_array($pages)){
+
+        $paged = (get_query_var('paged') == 0) ? 1 : get_query_var('paged');
+        echo '<div class="pagination-container"><ul class="list-inline list-unstyled">';
+        foreach ($pages as $page){
+            echo "<li>$page</li>";
+        }
+        echo '</ul></div>';
+    }
+
+
+
+
+
+
+}
