@@ -1,0 +1,32 @@
+/*===================================================================================*/
+/*  Woocommerce custom CSS
+/*
+ */
+
+.woocommerce ul.products li.product .button {
+    margin-top: 0em;
+    padding-bottom: 13px;
+    background-color: #D0205E;
+    color: #fff;
+}
+
+.woocommerce a.added_to_cart {
+    padding-top: .5em;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    width: 134px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.woocommerce ul.products li.product .onsale {
+    top: 0;
+    right: 0;
+    left: auto;
+    margin: 0.5em 0.5em 0 0;
+}
