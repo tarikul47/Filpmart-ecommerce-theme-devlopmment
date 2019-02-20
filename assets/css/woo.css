@@ -30,3 +30,8 @@
     left: auto;
     margin: 0.5em 0.5em 0 0;
 }
+
+.owl-item {
+    margin-top: 10px;
+    margin-right: 10px;
+}

@@ -138,7 +138,6 @@
 
 <!-- For demo purposes – can be removed on production : End -->
 
-
 <?php wp_footer(); ?>
 
 </body>

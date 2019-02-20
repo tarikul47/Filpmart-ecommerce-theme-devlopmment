@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <meta name="keywords" content="MediaCenter, Template, eCommerce">
     <meta name="robots" content="all">
-    <title>Flipmart premium HTML5 & CSS3 Template</title>
+
 
     <?php wp_head();?>
 
@@ -109,7 +109,7 @@
                             <div class="items-cart-inner">
                                 <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
                                 <div class="basket-item-count"><span class="count"><?php echo sprintf(_n('%d','%d',$woocommerce->cart->cart_contents_count,'filpmart' ),$woocommerce->cart->cart_contents_count);?></span></div>
-                                <div class="total-price-basket"> <span class="total-price"> <span class="sign">$</span><span class="value"><?php echo $woocommerce->cart->get_cart_total();?></span> </span> </div>
+                                <div class="total-price-basket">  <span class="total-price"> <span class="sign">$</span><span class="value"><?php echo $woocommerce->cart->get_cart_total();?></span> </span> </div>
                             </div>
                         </a>
                         <ul class="dropdown-menu">
